@@ -31,7 +31,8 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 # hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
-add_executable(demo
+add_executable(
+  ${PROJECT_NAME}
   ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
 )
 
