@@ -41,21 +41,12 @@ target_include_directories(
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-## target_link_libraries(demo ${PROJECT_NAME})
-
-if(BUILD_TESTS)
-  add_executable(tests
-    # TODO: enum your files and delete this comment
-    ${CMAKE_CURRENT_SOURCE_DIR}/tests/example.cpp
-  )
-  target_link_libraries(tests ${PROJECT_NAME} GTest::gtest_main)
   enable_testing()
   add_test(NAME unit_tests COMMAND tests)
-endif()
 
 if(BUILD_COVERAGE)
   set(ENABLE_COVERAGE ON CACHE BOOL "Enable coverage build." FORCE)
-  list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/tools/coverage/cmake")
+  list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
   find_package(codecov)
   string(APPEND CMAKE_CXX_FLAGS " --coverage")
   add_coverage(${PROJECT_NAME})

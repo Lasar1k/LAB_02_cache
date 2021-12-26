@@ -56,7 +56,8 @@ public:
 
             report(i, Exp[i]);
 
-            std::cout << " duration:" << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
+            std::cout << " duration:";
+            std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
             std::cout << " nanoseconds" << std::endl;
         }
     }
@@ -97,9 +98,10 @@ public:
 
             auto t2 = Clock::now();
 
-            report (i, Exp[i]);
+            report(i, Exp[i]);
 
-            std::cout << " duration:" << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
+            std::cout << " duration:";
+            std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
             std::cout << " nanoseconds" << std::endl;
         }
     }
@@ -144,9 +146,10 @@ public:
 
             auto t2 = Clock::now();
 
-            report (i, Exp[i]);
+            report(i, Exp[i]);
 
-            std::cout << " duration:" << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
+            std::cout << " duration:";
+            std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
             std::cout << " nanoseconds" << std::endl;
         }
     }
@@ -165,7 +168,7 @@ public:
     }
 };
 
-int main ()
+int main()
 {
     hash_pamyat Object;
     Object.pryamoi();
