@@ -10,7 +10,7 @@ string(APPEND CMAKE_CXX_FLAGS " -pedantic -Werror -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
 string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 
-add_executable(
+add_executable( demo
         ${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
 )
@@ -20,8 +20,15 @@ target_include_directories(
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-enable_testing()
-add_test(NAME unit_tests COMMAND tests)
+if(BUILD_TESTS)
+  add_executable(tests
+          # TODO: enum your files and delete this comment
+          ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
+          )
+  target_link_libraries(tests ${PROJECT_NAME} demo)
+  enable_testing()
+  add_test(NAME unit_tests COMMAND tests)
+endif()
 
 if (BUILD_COVERAGE)
   set(ENABLE_COVERAGE ON CACHE BOOL "Enable coverage build." FORCE)
