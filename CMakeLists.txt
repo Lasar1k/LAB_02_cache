@@ -20,7 +20,8 @@ HunterGate(
   SHA1 "95c47c92f68edb091b5d6d18924baabe02a6962a"
 )
 
-project(labCache)
+# TODO: rename project and delete this comment
+project(lab_02_cache)
 string(APPEND CMAKE_CXX_FLAGS " -pedantic -Werror -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
 string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
@@ -28,14 +29,21 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
-add_executable(demo
-        ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
+add_library(${PROJECT_NAME} STATIC
+  # enum your files and delete this comment
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/cache.cpp
 )
 
-##target_include_directories(
-##        ${PROJECT_NAME}
-##        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-##)
+add_executable(demo
+  ${CMAKE_CURRENT_SOURCE_DIR}/demo/main.cpp
+)
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:include>"
+)
+
+target_link_libraries(demo ${PROJECT_NAME})
 
 if(BUILD_TESTS)
   add_executable(tests
@@ -47,16 +55,15 @@ if(BUILD_TESTS)
   add_test(NAME unit_tests COMMAND tests)
 endif()
 
-if (BUILD_COVERAGE)
+if(BUILD_COVERAGE)
   set(ENABLE_COVERAGE ON CACHE BOOL "Enable coverage build." FORCE)
   list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/tools/coverage/cmake")
   find_package(codecov)
   string(APPEND CMAKE_CXX_FLAGS " --coverage")
   add_coverage(${PROJECT_NAME})
   add_coverage(tests)
-  list(APPEND LCOV_REMOVE_PATTERNS "'${PROJECT_SOURCE_DIR}/tests/*'")
   coverage_evaluate()
-endif ()
+endif()
 
 if(BUILD_DOCS)
   set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/_docs)
@@ -68,3 +75,20 @@ if(BUILD_DOCS)
   install(DIRECTORY ${DOXYGEN_OUTPUT_DIRECTORY}/man DESTINATION share)
   # add_dependencies(install docs) need to call target docs before install or package
 endif()
+
+include(CPackConfig.cmake)
+
+install(TARGETS ${PROJECT_NAME} demo
+  EXPORT "${PROJECT_NAME}-targets"
+  RUNTIME DESTINATION bin
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  INCLUDES DESTINATION include
+)
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/ DESTINATION include)
+
+install(EXPORT "${PROJECT_NAME}-targets"
+  NAMESPACE "${PROJECT_NAME}::"
+  DESTINATION "lib/cmake"
+)
