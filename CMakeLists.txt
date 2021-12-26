@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.16.3)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -24,7 +24,7 @@ if(BUILD_TESTS)
           # TODO: enum your files and delete this comment
           ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
           )
-  target_link_libraries(tests ${PROJECT_NAME})
+  ## target_link_libraries(tests ${PROJECT_NAME})
   enable_testing()
   add_test(NAME unit_tests COMMAND tests)
 endif()
