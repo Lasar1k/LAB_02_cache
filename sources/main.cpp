@@ -1,3 +1,4 @@
+// Copyright 2021 Lasar1k alf.ivan2002@gmail.com
 #include <iostream>
 #include <vector>
 #include <chrono>
@@ -16,7 +17,6 @@ class hash_pamyat
     std::vector <int> Exp;
     friend void report(int number, int& buffer_size);
 public:
-
     void pryamoi()
     {
         srand(0);
@@ -32,9 +32,9 @@ public:
             // инициализация и прогревание
             int n = Exp[i]*1024/sizeof(int);
             int *array = new int[n];
-            for (int j = 0; j<n; j++)
+            for (int j = 0; j < n; j++)
             {
-                array[j]=rand() % 100;
+                array[j] = rand() % 100;
                 array[j]*=15;
                 array[j]+=90;
             }
@@ -43,7 +43,7 @@ public:
 
             auto t1 = Clock::now();
 
-            for (int j = 0; j<1000; j++)
+            for (int j = 0; j < 1000; j++)
             {
                 for (int k = 0; k < n; k++)
                 {
@@ -54,16 +54,11 @@ public:
             auto t2 = Clock::now();
 
 
-            report (i,Exp[i]);
+            report(i, Exp[i]);
 
-            std::cout << " duration:" << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count()
-                      << " nanoseconds" << std::endl;
-
-
+            std::cout << " duration:" << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
+            std::cout << " nanoseconds" << std::endl;
         }
-
-
-
     }
 
     void obratnii()
@@ -76,14 +71,14 @@ public:
 
         int g = Exp.size();
 
-        for (int i=0; i< g; i++) // обратный проход
+        for (int i=0; i < g; i++) // обратный проход
         {
             // инициализация и прогревание
             int n = Exp[i]*1024/sizeof(int);
             int *array = new int[n];
-            for (int j = 0; j<n; j++)
+            for (int j = 0; j < n; j++)
             {
-                array[j]=rand()% 100;;
+                array[j] = rand()% 100;;
                 array[j]*=15;
                 array[j]+=90;
             }
@@ -92,9 +87,9 @@ public:
 
             auto t1 = Clock::now();
 
-            for (int j = 0; j<1000; j++)
+            for (int j = 0; j < 1000; j++)
             {
-                for (int k = n-1; k>=0; k--)
+                for (int k = n-1; k >= 0; k--)
                 {
                     array[k]*=1000;
                 }
@@ -102,15 +97,11 @@ public:
 
             auto t2 = Clock::now();
 
+            report (i, Exp[i]);
 
-            report (i,Exp[i]);
-
-            std::cout << " duration:" << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count()
-                      << " nanoseconds" << std::endl;
-
-
+            std::cout << " duration:" << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
+            std::cout << " nanoseconds" << std::endl;
         }
-
     }
 
     void sluchainii()
@@ -122,14 +113,14 @@ public:
         std::cout << "experiments:\n";
         int g = Exp.size();
 
-        for (int i=0; i< g; i++) // случайный проход
+        for (int i = 0; i < g; i++) // случайный проход
         {
             // инициализация и прогревание
             int n = Exp[i]*1024/sizeof(int);
             int *array = new int[n];
-            for (int j = 0; j<n; j++)
+            for (int j = 0; j < n; j++)
             {
-                array[j]=rand()% 100;;
+                array[j] = rand()% 100;;
                 array[j]*=15;
                 array[j]+=90;
             }
@@ -143,9 +134,9 @@ public:
 
             auto t1 = Clock::now();
 
-            for (int j = 0; j<1000; j++)
+            for (int j = 0; j < 1000; j++)
             {
-                for (int k = 0; k<n; k++)
+                for (int k = 0; k < n; k++)
                 {
                     array[k]*=1000;
                 }
@@ -153,24 +144,19 @@ public:
 
             auto t2 = Clock::now();
 
+            report (i, Exp[i]);
 
-            report (i,Exp[i]);
-
-            std::cout << " duration:" << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count()
-                      << " nanoseconds" << std::endl;
-
+            std::cout << " duration:" << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count();
+            std::cout << " nanoseconds" << std::endl;
         }
-
-
     }
-
 
     hash_pamyat()
     {
         int CS1 = 128; // первый уровень кэша
         const auto MAXSIZE = 1.5 * 3*1024; // максимум, 3 уровень кэша
         auto n = CS1*1/2; // минимум, первый эксперимент
-        while (n<MAXSIZE)
+        while (n < MAXSIZE)
         {
             Exp.push_back(n);
             n*=2;
@@ -179,15 +165,10 @@ public:
     }
 };
 
-
-
-
-
 int main ()
 {
     hash_pamyat Object;
     Object.pryamoi();
     Object.obratnii();
     Object.sluchainii();
-
 }
