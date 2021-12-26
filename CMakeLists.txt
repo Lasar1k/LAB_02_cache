@@ -10,8 +10,7 @@ string(APPEND CMAKE_CXX_FLAGS " -pedantic -Werror -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
 string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 
-add_executable( demo
-        ${PROJECT_NAME}
+add_executable(${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
 )
 
@@ -25,7 +24,7 @@ if(BUILD_TESTS)
           # TODO: enum your files and delete this comment
           ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
           )
-  target_link_libraries(tests ${PROJECT_NAME} demo)
+  target_link_libraries(tests ${PROJECT_NAME})
   enable_testing()
   add_test(NAME unit_tests COMMAND tests)
 endif()
